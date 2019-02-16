@@ -7,7 +7,7 @@ public:
 	Button();
 	Button(int pin);
 	~Button();
-	virtual void tick();
+	virtual void tick(); //does this really need to be virtual?
 	bool fell();
 private:
 	Bounce button;

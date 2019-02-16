@@ -16,5 +16,6 @@ private:
 	State state;
 	Track track;
 	Button button;
+  bool buttonPressed;
 };
 
