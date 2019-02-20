@@ -6,16 +6,18 @@ class TrackController
 {
 public:
 	TrackController();
-	TrackController(Track track, Button button);
+	TrackController(Track* track, Button* button);
 	~TrackController();
-	enum State { idle, recording, playing, waiting, overdub };
+	enum State { idle, recording, playing, waiting, overdub, stopped };
 	void tick();
 	State getState();
-
+  void stopButton();
+  void startButton();
 private:
 	State state;
-	Track track;
-	Button button;
+  State lastState;
+	Track* track;
+	Button* button;
   bool buttonPressed;
 };
 

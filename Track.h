@@ -15,6 +15,7 @@ public:
 	void stopRecording();
 	void continuePlaying();
 	void continueRecording();
+  void abortRecord();
 private:
   void updateFilename();
 	bool playing;

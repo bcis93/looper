@@ -8,19 +8,22 @@ class Looper
 {
 public:
 	Looper();
-	Looper(Button recPlay);
+	Looper(Button* recPlay, Button* startStop);
 	~Looper();
 //	bool getWaitingToStart();
 	void tick();
-	void addTrack(TrackController track);
+	void addTrack(TrackController* track);
 private:
 //	bool waitingToStart;
-	std::vector<TrackController> trackControllers;
-	Button recPlayButton;
+	std::vector<TrackController*> trackControllers;
+	Button* recPlayButton;
+  Button* startStopButton;
 	TrackController* masterTrack;
 	unsigned trackLength;
 	elapsedMillis currentPosition;
-	enum State { idle, firstRecording, normalOperation };
+	enum State { idle, firstRecording, normalOperation, stopped };
 	State state;
+  void stopButton();
+  void startButton();
 };
 

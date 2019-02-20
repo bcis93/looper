@@ -106,18 +106,18 @@ void Track::stopRecording()
   updateFilename();
 }
 
-void Track::continuePlaying()
-{
-  if (!playRaw->isPlaying()) {
-    playRaw->stop();
-    AudioNoInterrupts();
-    const char* cstr = (filenameCurrent + FILE_EXTENSION).c_str();
-    if (!playRaw->play(cstr)){
-      //Serial.println("failed to open " + track1Current + FILE_EXTENSION);
-    }
-    AudioInterrupts();
-  }
-}
+//void Track::continuePlaying()
+//{
+//  if (!playRaw->isPlaying()) {
+//    playRaw->stop();
+//    AudioNoInterrupts();
+//    const char* cstr = (filenameCurrent + FILE_EXTENSION).c_str();
+//    if (!playRaw->play(cstr)){
+//      //Serial.println("failed to open " + track1Current + FILE_EXTENSION);
+//    }
+//    AudioInterrupts();
+//  }
+//}
 
 void Track::continueRecording()
 {
@@ -140,5 +140,20 @@ void Track::updateFilename(){
   filenameNext += c;
 //  Serial.println("filenameNext: " + filenameNext);
   //check length!!!
+}
+
+void Track::abortRecord(){
+  String tmp = filenameNext + FILE_EXTENSION;
+  const char* cstr = tmp.c_str();
+  
+  queue->end();
+
+  AudioNoInterrupts();
+  file.close();
+  SD.remove(cstr);
+  AudioInterrupts();
+  
+//  Serial.println("abortRecording");
+  recording = false;
 }
 
