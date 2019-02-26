@@ -8,7 +8,7 @@ class Looper
 {
 public:
 	Looper();
-	Looper(Button* recPlay, Button* startStop);
+	Looper(Button* recPlay, Button* startStop, Button* resetButton);
 	~Looper();
 //	bool getWaitingToStart();
 	void tick();
@@ -18,6 +18,7 @@ private:
 	std::vector<TrackController*> trackControllers;
 	Button* recPlayButton;
   Button* startStopButton;
+  Button* resetButton;
 	TrackController* masterTrack;
 	unsigned trackLength;
 	elapsedMillis currentPosition;
@@ -25,5 +26,6 @@ private:
 	State state;
   void stopButton();
   void startButton();
+  void resetPressed();
 };
 

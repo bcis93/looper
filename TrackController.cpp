@@ -198,3 +198,25 @@ void TrackController::startButton(){
   }
 }
 
+void TrackController::resetButton(){
+  switch (state){
+    case idle:
+      break;
+    case recording:
+      track->abortRecord();
+      break;
+    case playing:
+      track->stopPlaying();
+      break;
+    case waiting:
+      break;
+    case overdub:
+      track->stopPlaying();
+      track->abortRecord();
+      break;
+    default:
+      break;
+  }
+  state = idle;
+}
+

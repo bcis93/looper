@@ -13,6 +13,7 @@ public:
 	State getState();
   void stopButton();
   void startButton();
+  void resetButton();
 private:
 	State state;
   State lastState;

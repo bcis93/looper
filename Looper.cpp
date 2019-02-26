@@ -8,10 +8,11 @@ Looper::Looper()
 	recordingMode = true;
 }
 
-Looper::Looper(Button* recPlay, Button* startStop)
+Looper::Looper(Button* recPlay, Button* startStop, Button* resetButton)
 {
 	recPlayButton = recPlay;
   startStopButton = startStop;
+  this->resetButton = resetButton;
 	state = idle;
 	recordingMode = true;
   masterTrack = NULL;
@@ -31,6 +32,7 @@ void Looper::tick()
 {
   bool recPlayButtonPressed;
   bool startStopButtonPressed;
+  bool resetButtonPressed;
   
 	for (int i = 0; i < trackControllers.size(); i++) {
 		trackControllers[i]->tick();
@@ -38,9 +40,20 @@ void Looper::tick()
 
 	recPlayButton->tick();
   startStopButton->tick();
+  resetButton->tick();
   
 	recPlayButtonPressed = recPlayButton->fell();
   startStopButtonPressed = startStopButton->fell();
+  resetButtonPressed = resetButton->fell();
+
+  if (resetButtonPressed){
+    Serial.println("Reset button pressed!");
+    resetPressed();
+    state = idle;
+    recordingMode = true;
+    masterTrack = NULL;
+    waitingToStart = 0;
+  }
 
 
   if (startStopButtonPressed){
@@ -145,6 +158,12 @@ void Looper::stopButton(){
 void Looper::startButton(){
   for (int i = 0; i < trackControllers.size(); i++) {
     trackControllers[i]->startButton();
+  }
+}
+
+void Looper::resetPressed(){
+  for (int i = 0; i < trackControllers.size(); i++) {
+    trackControllers[i]->resetButton();
   }
 }
 

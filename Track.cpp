@@ -12,7 +12,7 @@ Track::Track(int id, AudioRecordQueue* q, AudioPlaySdRaw* pr, AudioMixer4* mix) 
   playing = false;
   recording = false;
   this->id = id;
-  c = 64 + id;
+  c = 68 + id;
   filenameCurrent = c;
   filenameNext = c;
   Serial.println(filenameCurrent);
@@ -54,6 +54,7 @@ void Track::startPlaying()
 void Track::startRecording()
 {
   for (int i = 1; i < 4; i++){
+//    if (i == id-1){ // For 4 track mixer
     if (i == id){
       mixer->gain(i, 1);
     }
@@ -138,6 +139,9 @@ void Track::continueRecording()
 void Track::updateFilename(){
   filenameCurrent = filenameNext;
   filenameNext += c;
+  if (filenameNext.length() > 8){
+    filenameNext = c;
+  }
 //  Serial.println("filenameNext: " + filenameNext);
   //check length!!!
 }
